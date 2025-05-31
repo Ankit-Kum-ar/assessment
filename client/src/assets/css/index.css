@@ -1,0 +1,255 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --transition-speed: 0.3s;
+}
+
+body {
+  @apply bg-base-200 text-base-content;
+  font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+  @apply font-semibold tracking-tight;
+}
+
+.card {
+  @apply transition-all duration-300 hover:shadow-lg;
+}
+
+.btn {
+  @apply font-medium transition-all duration-300;
+}
+
+.btn-primary {
+  @apply shadow-md hover:shadow-lg hover:-translate-y-0.5;
+}
+
+.btn-accent {
+  @apply shadow-md hover:shadow-lg hover:-translate-y-0.5;
+}
+
+.table {
+  @apply rounded-lg overflow-hidden;
+}
+
+.navbar {
+  @apply backdrop-blur-sm bg-opacity-90 relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  min-height: 600px;
+  @apply rounded-xl overflow-hidden shadow-xl;
+}
+
+.badge {
+  @apply font-medium;
+}
+
+.form-control .input,
+.form-control .select {
+  @apply transition-all duration-300 focus:shadow-md;
+}
+
+.modal-box {
+  @apply border border-base-300;
+}
+
+.modal-middle {
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-middle .modal-box {
+  margin-top: 0;
+  margin-bottom: 0;
+  max-height: 95vh;
+  overflow-y: auto;
+}
+
+/* Modal positioning */
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-y: auto;
+  padding: 2rem 0;
+}
+
+.modal-open {
+  overflow-y: auto;
+  padding-right: 0 !important; /* Remove padding to prevent layout shift */
+}
+
+/* Position modal in center vertically */
+.modal-box {
+  margin: auto;
+  max-height: calc(100vh - 5rem);
+  overflow-y: auto;
+  transform: translateY(0);
+}
+
+/* Avatar styling */
+.avatar .rounded-full {
+  @apply transition-all duration-300 flex items-center justify-center;
+  line-height: 1;
+}
+
+.avatar .rounded-full span {
+  margin-top: 1px; /* Fine-tune vertical alignment of the letter */
+  transform: translateY(0.5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.btn-circle.avatar {
+  @apply p-0 overflow-hidden;
+}
+
+.btn-circle.avatar:hover .rounded-full {
+  @apply shadow-lg;
+  transform: scale(1.05);
+}
+
+/* Avatar styling to center the letter properly */
+.avatar-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-wrapper span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding-bottom: 0;
+  padding-top: 0;
+}
+
+/* Active link styling */
+.menu a.router-link-active,
+.menu a.router-link-exact-active {
+  @apply bg-primary/10 text-primary font-semibold;
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Pulse animation for the active stations */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.pulse-animation {
+  animation: pulse 2s infinite;
+}
+
+/* Custom marker styling */
+.custom-marker {
+  @apply transition-all duration-300;
+}
+
+.custom-marker:hover {
+  transform: scale(1.2);
+}
+
+.popup-button {
+  @apply btn btn-xs btn-primary no-animation;
+}
+
+/* Make dropdown menu look better */
+.dropdown .dropdown-content {
+  @apply shadow-xl border border-primary/10;
+}
+
+/* Make sure modals are always centered properly */
+@media (max-width: 768px) {
+  .modal-middle {
+    align-items: center;
+  }
+  
+  .modal-middle .modal-box {
+    margin: 1rem;
+    width: calc(100% - 2rem);
+    max-height: calc(100vh - 4rem);
+  }
+}
+
+/* Beautiful gradients for auth pages */
+.bg-gradient-login {
+  background: linear-gradient(135deg, #1a365d 0%, #0f172a 100%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  min-height: 100vh;
+  width: 100%;
+  z-index: -10;
+}
+
+.bg-gradient-login::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(74, 222, 128, 0.15) 0%, transparent 35%),
+    radial-gradient(circle at 80% 70%, rgba(14, 165, 233, 0.2) 0%, transparent 40%);
+  z-index: -5;
+}
+
+.bg-gradient-register {
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  min-height: 100vh;
+  width: 100%;
+  z-index: -10;
+}
+
+.bg-gradient-register::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 80% 30%, rgba(99, 102, 241, 0.2) 0%, transparent 35%),
+    radial-gradient(circle at 20% 70%, rgba(74, 222, 128, 0.15) 0%, transparent 40%);
+  z-index: -5;
+}
+
+/* Reset the background patterns that were previously defined */
+.bg-login-pattern,
+.bg-register-pattern {
+  background-image: none;
+}
+
+.bg-login-pattern::before,
+.bg-register-pattern::before {
+  display: none;
+}
