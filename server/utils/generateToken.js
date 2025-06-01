@@ -8,7 +8,6 @@ const generateToken = (userId, res) => {
     res.cookie('token', token, {
         httpOnly: true,
         secure: true, // Required for production HTTPS
-        sameSite: 'None', // Allows cross-site cookies
         maxAge: 24 * 60 * 60 * 1000 // 1 day
     });
     return token;
