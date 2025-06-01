@@ -4,13 +4,19 @@ const User = require('../models/user.model');
 
 const authMiddleware = async (req, res, next) => {
   try {
-    // Get token from cookie
-    const token = req.cookies.token;
-    console.log(token);
-    console.log(req.cookies)
-    console.log(req)
+    // Get token from cookie or Authorization header
+    let token = req.cookies?.token;
+    
+    // If no cookie token, check Authorization header
+    if (!token && req.headers.authorization) {
+      // Format should be "Bearer [token]"
+      const authHeader = req.headers.authorization;
+      if (authHeader.startsWith('Bearer ')) {
+        token = authHeader.split(' ')[1];
+      }
+    }
+
     if (!token) {
-      console.log(token);
       return res.status(401).json({ message: 'Not authorized, please login' });
     }
 
@@ -33,7 +39,7 @@ const authMiddleware = async (req, res, next) => {
     
     next();
   } catch (error) {
-    console.error('Auth middleware error:', error);
+    console.error('Auth middleware error:', error.message);
     res.status(401).json({ message: 'Not authorized, token failed' });
   }
 };

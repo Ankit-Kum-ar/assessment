@@ -19,6 +19,7 @@ export const useAuthStore = defineStore('auth', {
       try {
         // Check if user is authenticated by making a request to a protected endpoint
         const response = await api.get('/api/v1/auth/me');
+        console.log('Auth response:', response.data);
         if (response.data && response.data.user) {
           this.user = response.data.user;
           this.isAuthenticated = true;
@@ -59,6 +60,12 @@ export const useAuthStore = defineStore('auth', {
       try {
         const response = await api.post('/api/v1/auth/login', credentials)
         this.user = response.data.user
+        
+        // Store token in localStorage as backup authentication method
+        if (response.data.token) {
+          localStorage.setItem('auth_token', response.data.token)
+        }
+        
         this.isAuthenticated = true
         this.loading = false
         return response.data
