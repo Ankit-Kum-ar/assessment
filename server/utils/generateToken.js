@@ -6,7 +6,10 @@ const generateToken = (userId, res) => {
         expiresIn: '1d',
     });
     res.cookie('token', token, {
-        maxAge: 24 * 60 * 60 * 1000, // Cookie expiration time (1 day)
+        httpOnly: true,
+        secure: true, // Required for production HTTPS
+        sameSite: 'None', // Allows cross-site cookies
+        maxAge: 24 * 60 * 60 * 1000 // 1 day
     });
     return token;
 }
