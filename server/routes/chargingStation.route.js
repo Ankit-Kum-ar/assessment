@@ -6,11 +6,11 @@ const {
     updateStation, 
     deleteStation 
 } = require('../controllers/chargingStation.controller');
-const authMiddleware = require('../middlewares/auth.middleware');
+// const authMiddleware = require('../middlewares/auth.middleware');
 
 const chargingStationRouter = express.Router();
 // Authentication middleware
-chargingStationRouter.use(authMiddleware);
+// chargingStationRouter.use(authMiddleware);
 
 
 chargingStationRouter.post('/', createStation);
