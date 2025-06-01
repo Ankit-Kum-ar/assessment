@@ -13,7 +13,7 @@ app.use(cookieParser()); // Middleware to parse cookies
 
 // Middleware to handle CORS
 app.use(cors({
-    origin: 'http://localhost:5173', // Adjust this to your frontend URL
+    origin: 'https://ey-green.vercel.app', // Adjust this to your frontend URL
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 }));
 

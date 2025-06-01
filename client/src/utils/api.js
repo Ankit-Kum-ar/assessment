@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5500',
+  baseURL: 'https://assessment-c3hi.onrender.com',
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json'
