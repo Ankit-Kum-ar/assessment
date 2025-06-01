@@ -17,13 +17,13 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login,
-    meta: { requiresGuest: true }
+    meta: { requiresGuest: true, skipAuth: true }
   },
   {
     path: '/register',
     name: 'Register',
     component: Register,
-    meta: { requiresGuest: true }
+    meta: { requiresGuest: true, skipAuth: true }
   },
   {
     path: '/dashboard',
@@ -59,8 +59,8 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
   
-  // Check if auth store is initialized; if not, try to init it
-  if (!authStore.initialized) {
+  // Check if auth store is initialized; if not, try to initialize auth
+  if (!authStore.initialized && !to.meta.skipAuth) {
     try {
       await authStore.initAuth()
     } catch (error) {

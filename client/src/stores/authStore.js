@@ -6,23 +6,32 @@ export const useAuthStore = defineStore('auth', {
     user: null,
     isAuthenticated: false,
     loading: false,
-    error: null
+    error: null,
+    initialized: false
   }),
   
   actions: {
     // Initialize auth state from user session
     async initAuth() {
+      if (this.initialized) return;
+      
+      this.loading = true;
       try {
         // Check if user is authenticated by making a request to a protected endpoint
-        const response = await api.get('/api/v1/auth/me')
+        const response = await api.get('/api/v1/auth/me');
         if (response.data && response.data.user) {
-          this.user = response.data.user
-          this.isAuthenticated = true
+          this.user = response.data.user;
+          this.isAuthenticated = true;
         }
       } catch (error) {
         // If request fails, user is not authenticated
-        this.user = null
-        this.isAuthenticated = false
+        this.user = null;
+        this.isAuthenticated = false;
+        // Don't throw error here, just log it
+        console.log('Not authenticated:', error.message);
+      } finally {
+        this.loading = false;
+        this.initialized = true;
       }
     },
     
@@ -66,16 +75,13 @@ export const useAuthStore = defineStore('auth', {
       this.error = null
       try {
         await api.post('/api/v1/auth/logout')
-        this.user = null
-        this.isAuthenticated = false
-        this.loading = false
       } catch (error) {
-        this.error = error.response?.data?.message || 'Logout failed'
-        this.loading = false
-        // Still remove user from state even if API call fails
+        console.error('Logout error:', error)
+      } finally {
+        // Always clear state regardless of API success
         this.user = null
         this.isAuthenticated = false
-        throw error
+        this.loading = false
       }
     },
     
