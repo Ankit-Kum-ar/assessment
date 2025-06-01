@@ -72,12 +72,13 @@ const loginUser = async (req, res) => {
                 return res.status(400).json({ message: 'Invalid email or password' });
             }
 
-            // User authenticated successfully
-            await user.save(); // Save user to update last login time or other fields if needed
         });
 
         // generate token and save in cookie
+        // console.log('User found:', user._id);
         generateToken(user._id, res);
+
+        await user.save(); // Save user to update last login time or other fields if needed
 
         res.status(200).json({
             message: 'User logged in successfully',

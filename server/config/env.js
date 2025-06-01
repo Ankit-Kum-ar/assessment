@@ -7,7 +7,7 @@ const {
     PORT,
     MONGO_URI,
     JWT_SECRET,
-    NODE_ENV = 'development', // Default to 'development' if not set
+    NODE_ENV
 } = process.env;
 
 module.exports = {
