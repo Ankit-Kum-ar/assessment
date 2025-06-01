@@ -6,9 +6,11 @@ const authMiddleware = async (req, res, next) => {
   try {
     // Get token from cookie
     const token = req.cookies.token;
-    // console.log(token);
+    console.log(token);
+    console.log(req.cookies)
+    console.log(req)
     if (!token) {
-      // console.log(token);
+      console.log(token);
       return res.status(401).json({ message: 'Not authorized, please login' });
     }
 
