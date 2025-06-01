@@ -104,8 +104,26 @@ const logoutUser = async (req, res) => {
     }
 }
 
+const getMe = async (req, res) => {
+    try {
+        // This route will be protected by the auth middleware, so req.user will be available
+        res.status(200).json({
+            success: true,
+            user: {
+                id: req.user.id,
+                username: req.user.username,
+                email: req.user.email
+            }
+        });
+    } catch (error) {
+        console.error('Error fetching user profile:', error);
+        res.status(500).json({ message: error.message || 'Internal server error' });
+    }
+}
+
 module.exports = {
     registerUser,
     loginUser,
-    logoutUser
+    logoutUser,
+    getMe
 };

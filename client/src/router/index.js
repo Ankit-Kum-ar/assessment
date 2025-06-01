@@ -56,10 +56,18 @@ const router = createRouter({
 })
 
 // Navigation guards
-router.beforeEach((to, from, next) => {
-  // We need to get the store inside the navigation guard function
-  // instead of at the module level since router is created before pinia
+router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
+  
+  // Check if auth store is initialized; if not, try to init it
+  if (!authStore.initialized) {
+    try {
+      await authStore.initAuth()
+    } catch (error) {
+      console.error('Failed to initialize auth state:', error)
+    }
+  }
+  
   const isAuthenticated = authStore.isAuthenticated
   
   // Routes requiring auth

@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://assessment-c3hi.onrender.com',
-  withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json'
-  }
+  baseURL: import.meta.env.VITE_API_URL || 'https://assessment-c3hi.onrender.com',
+  withCredentials: true, // Important: This allows cookies to be sent and received
+  // headers: {
+  //   'Content-Type': 'application/json'
+  // }
 });
 
 // Add a response interceptor to handle errors globally
@@ -14,9 +14,7 @@ api.interceptors.response.use(
   error => {
     if (error.response && error.response.status === 401) {
       // 401 Unauthorized - User needs to login again
-      localStorage.removeItem('user');
-      // You might want to redirect to login page here
-      // or handle it in the component
+      window.location.href = '/login'; // Hard redirect to ensure all state is reset
     }
     return Promise.reject(error);
   }

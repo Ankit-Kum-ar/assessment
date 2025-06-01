@@ -3,20 +3,35 @@ import api from '../utils/api'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    user: JSON.parse(localStorage.getItem('user')) || null,
-    isAuthenticated: !!localStorage.getItem('user'),
+    user: null,
+    isAuthenticated: false,
     loading: false,
     error: null
   }),
   
   actions: {
+    // Initialize auth state from user session
+    async initAuth() {
+      try {
+        // Check if user is authenticated by making a request to a protected endpoint
+        const response = await api.get('/api/v1/auth/me')
+        if (response.data && response.data.user) {
+          this.user = response.data.user
+          this.isAuthenticated = true
+        }
+      } catch (error) {
+        // If request fails, user is not authenticated
+        this.user = null
+        this.isAuthenticated = false
+      }
+    },
+    
     // Register user
     async register(userData) {
       this.loading = true
       this.error = null
       try {
         const response = await api.post('/api/v1/auth/register', userData)
-        localStorage.setItem('user', JSON.stringify(response.data.user))
         this.user = response.data.user
         this.isAuthenticated = true
         this.loading = false
@@ -34,7 +49,6 @@ export const useAuthStore = defineStore('auth', {
       this.error = null
       try {
         const response = await api.post('/api/v1/auth/login', credentials)
-        localStorage.setItem('user', JSON.stringify(response.data.user))
         this.user = response.data.user
         this.isAuthenticated = true
         this.loading = false
@@ -52,7 +66,6 @@ export const useAuthStore = defineStore('auth', {
       this.error = null
       try {
         await api.post('/api/v1/auth/logout')
-        localStorage.removeItem('user')
         this.user = null
         this.isAuthenticated = false
         this.loading = false
@@ -60,7 +73,6 @@ export const useAuthStore = defineStore('auth', {
         this.error = error.response?.data?.message || 'Logout failed'
         this.loading = false
         // Still remove user from state even if API call fails
-        localStorage.removeItem('user')
         this.user = null
         this.isAuthenticated = false
         throw error

@@ -2,14 +2,17 @@
   <div class="min-h-screen bg-base-200">
     <Navbar v-if="isAuthenticated" />
     <main class="container mx-auto px-4 py-8">
-      <router-view></router-view>
+      <router-view v-if="initialized"></router-view>
+      <div v-else class="flex justify-center items-center h-screen">
+        <div class="loading loading-spinner loading-lg text-primary"></div>
+      </div>
     </main>
     <Toast :message="errorMessage" :type="'error'" v-if="errorMessage" @close="clearErrors" />
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from './stores/authStore'
 import { useStationStore } from './stores/stationStore'
@@ -19,6 +22,7 @@ import Toast from './components/Toast.vue'
 const authStore = useAuthStore()
 const stationStore = useStationStore()
 const router = useRouter()
+const initialized = ref(false)
 
 const isAuthenticated = computed(() => authStore.isAuthenticated)
 
@@ -30,6 +34,17 @@ const clearErrors = () => {
   authStore.clearErrors()
   stationStore.clearErrors()
 }
+
+onMounted(async () => {
+  try {
+    // Initialize auth state from cookies
+    await authStore.initAuth()
+  } catch (error) {
+    console.error('Failed to initialize auth state:', error)
+  } finally {
+    initialized.value = true
+  }
+})
 
 // Set up axios interceptor for authentication
 import axios from 'axios'
