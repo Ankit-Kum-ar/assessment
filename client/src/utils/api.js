@@ -6,8 +6,6 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json'
   },
-  // Add a longer timeout to prevent premature failures
-  timeout: 15000 
 });
 
 // Add an interceptor to include the token from localStorage

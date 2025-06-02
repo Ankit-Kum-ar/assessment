@@ -89,6 +89,7 @@ export const useAuthStore = defineStore('auth', {
         this.user = null
         this.isAuthenticated = false
         this.loading = false
+        localStorage.removeItem('auth_token') // Clear token from localStorage
       }
     },
     
