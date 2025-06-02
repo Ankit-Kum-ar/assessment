@@ -8,16 +8,8 @@ const generateToken = (userId, res) => {
     res.cookie('token', token, {
         httpOnly: true,
         secure: NODE_ENV === 'production',
-        sameSite: 'Strict',
+        sameSite: 'strict',
         maxAge: 24 * 60 * 60 * 1000 // 1 day
-    }).json({
-        success: true,
-        user: {
-            id: user._id,
-            username: user.username,
-            email: user.email
-        },
-        token: token // Also send token in response body
     });
     return token;
 }
