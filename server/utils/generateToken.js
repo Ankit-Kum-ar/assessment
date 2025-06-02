@@ -8,7 +8,7 @@ const generateToken = (userId, res) => {
     res.cookie('token', token, {
         httpOnly: true,
         secure: NODE_ENV === 'production',
-        sameSite: NODE_ENV === 'production' ? 'None' : 'Lax',
+        sameSite: 'Strict',
         maxAge: 24 * 60 * 60 * 1000 // 1 day
     }).json({
         success: true,
