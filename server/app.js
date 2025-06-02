@@ -14,7 +14,7 @@ app.use(cookieParser()); // Middleware to parse cookies
 
 // Middleware to handle CORS
 app.use(cors({
-    origin: "https://ey-green.vercel.app",
+    origin: "https://assess-wwoq.onrender.com",
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 }));
 

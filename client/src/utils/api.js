@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: "https://ey-backend-xtii.onrender.com",
+  baseURL: "https://assessment-1rju.onrender.com",
   withCredentials: true, // Keep this for cookies
   headers: {
     'Content-Type': 'application/json'
